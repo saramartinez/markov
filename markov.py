@@ -8,18 +8,17 @@ def make_chains(corpus):
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
     # iterate through list word-by-word
-    key_list = []
-    for i in range(len(corpus)-1):
-        key_list = []
-        key_list[i] = (corpus[i], corpus[i+1])
-        i += 1
+    new_dict = {}
+    # create key values from corpus words (all words but last word)
+    for i in range(len(corpus) -1):
+        # keys will be two words, values will be one word
+        if i != (len(corpus)-2):
+            new_dict[corpus[i], corpus[i+1]] = corpus[i+2]
+        # unless it's the last word
+        else:
+            new_dict[corpus[i], corpus[i+1]] = None
 
-#     print key_list
-    #create key values from corpus words (all words but last word)
-    #keys will be two words
-    #values will be a list of words created by going through the text file
-    # create dict with 2-word keys -- for word in range list length-1, list[i], list[i+1] // value = make another list of values
-   # return {}
+    return new_dict
 
 # def make_text(chains):
 #     """Takes a dictionary of markov chains and returns random text
