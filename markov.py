@@ -1,5 +1,3 @@
-# Notice here, we're explicitly nesting data structures, using a tuple as a key in a dictionary, and a list as the value.
-
 #!/usr/bin/env python
 
 import sys
@@ -7,23 +5,18 @@ import sys
 def make_chains(corpus):
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
-    # iterate through list word-by-word
     new_dict = {}
-    # create key values from corpus words (all words but last word)
-    for i in range(len(corpus) -1):
-        # keys will be two words, values will be one word
-        if i != (len(corpus)-2):
-            new_dict[corpus[i], corpus[i+1]] = corpus[i+2]
-        # unless it's the last word
-        else:
-            new_dict[corpus[i], corpus[i+1]] = None
-
+    # iterate through list word-by-word, creating chains
+    for index in range(len(corpus) - 2):
+        key = (corpus[index], corpus[index + 1])
+        new_dict[key] = new_dict.setdefault(key, [])
+        new_dict[key].append(corpus[index + 2])
     return new_dict
 
-# def make_text(chains):
-#     """Takes a dictionary of markov chains and returns random text
-#     based off an original text."""
-#     return "Here's some random text."
+def make_text(chains):
+    """Takes a dictionary of markov chains and returns random text
+    based off an original text."""
+    return "Here's some random text."
 
 def main():
     args = sys.argv
@@ -37,9 +30,8 @@ def main():
             final_list.append(word)
   
     chain_dict = make_chains(final_list)
-    print chain_dict
-#     random_text = make_text(chain_dict)
-#     print random_text
+    random_text = make_text(chain_dict)
+    print random_text
 
 if __name__ == "__main__":
     main()
